@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer Sign Up - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #0b6736;
+          --secondary-color: #2e8b57;
+          --light-color: #f5f9f7;
+          --dark-color: #333;
+          --text-color: #444;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Poppins", sans-serif;
+          color: var(--text-color);
+          background-color: #f8f8f8;
+          line-height: 1.6;
+          min-height: 100vh;
+          background: linear-gradient(
+              rgba(255, 255, 255, 0.9),
+              rgba(255, 255, 255, 0.9)
+            ),
+            url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+          background-color: white;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          z-index: 1000;
+        }
+
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 0;
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-weight: 700;
+          color: var(--primary-color);
+          text-decoration: none;
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .auth-buttons {
+          display: flex;
+          gap: 15px;
+        }
+
+        .btn {
+          padding: 8px 20px;
+          border-radius: 30px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .btn-outline {
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          background: transparent;
+        }
+
+        .btn-outline:hover {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        .btn-filled {
+          background-color: var(--primary-color);
+          color: white;
+          border: 2px solid var(--primary-color);
+        }
+
+        .btn-filled:hover {
+          background-color: var(--secondary-color);
+          border-color: var(--secondary-color);
+        }
+
+        /* Main Content */
+        main {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 40px 0;
+        }
+
+        /* Signup Form */
+        .signup-container {
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 600px;
+          padding: 40px;
+          text-align: center;
+          margin: 0 auto;
+        }
+
+        .signup-header {
+          margin-bottom: 30px;
+        }
+
+        .signup-header h1 {
+          color: var(--primary-color);
+          font-size: 2.2rem;
+          margin-bottom: 10px;
+        }
+
+        .signup-header p {
+          color: var(--text-color);
+        }
+
+        .form-row {
+          display: flex;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+
+        .form-group {
+          flex: 1;
+          text-align: left;
+          margin-bottom: 15px;
+        }
+
+        .form-group label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: var(--dark-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 16px;
+          transition: border-color 0.3s;
+          font-family: "Poppins", sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+          border-color: var(--primary-color);
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(11, 103, 54, 0.2);
+        }
+
+        .signup-btn {
+          width: 100%;
+          padding: 14px;
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          margin-top: 10px;
+        }
+
+        .signup-btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        .signup-footer {
+          margin-top: 20px;
+        }
+
+        .signup-footer a {
+          color: var(--primary-color);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .signup-footer a:hover {
+          text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 30px 0 20px;
+          margin-top: auto;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 30px;
+          margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+          font-size: 1.2rem;
+          margin-bottom: 15px;
+        }
+
+        .footer-column ul {
+          list-style: none;
+        }
+
+        .footer-column ul li {
+          margin-bottom: 8px;
+        }
+
+        .footer-column a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: color 0.3s;
+          font-size: 0.9rem;
+        }
+
+        .footer-column a:hover {
+          color: white;
+        }
+
+        .footer-bottom {
+          text-align: center;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .signup-container {
+            padding: 30px 20px;
+            margin: 20px;
+          }
+
+          .form-row {
+            flex-direction: column;
+            gap: 0;
+          }
+
+          .auth-buttons {
+            display: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .signup-header h1 {
+            font-size: 1.8rem;
+          }
+
+          .form-group input,
+          .form-group select,
+          .form-group textarea {
+            padding: 10px 12px;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>AgroFlow</span>
+            </a>
+
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-filled">Sign Up</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main>
+    <div class="container">
+        <div class="signup-container">
+            <div class="signup-header">
+                <h1>Krishi Officer Registration</h1>
+                <p>
+                    Create your account to manage farmers and agricultural operations
+                </p>
+            </div>
+
+            <form id="signupForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullname">Full Name *</label>
+                        <input type="text" id="fullname" name="fullname" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nid">National ID (NID) *</label>
+                        <input type="text" id="nid" name="nid" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Contact Number *</label>
+                        <input type="tel" id="contact" name="contact" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="officeLocation">Office Location *</label>
+                        <input
+                                type="text"
+                                id="officeLocation"
+                                name="officeLocation"
+                                required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="region">Region Assigned *</label>
+                        <select id="region" name="region" required>
+                            <option value="">Select Region</option>
+                            <option value="dhaka">Dhaka Division</option>
+                            <option value="chattogram">Chattogram Division</option>
+                            <option value="rajshahi">Rajshahi Division</option>
+                            <option value="khulna">Khulna Division</option>
+                            <option value="barishal">Barishal Division</option>
+                            <option value="sylhet">Sylhet Division</option>
+                            <option value="rangpur">Rangpur Division</option>
+                            <option value="mymensingh">Mymensingh Division</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password *</label>
+                        <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                required
+                        />
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                  <label for="address">Office Address</label>
+                  <textarea id="address" name="address" rows="2"></textarea>
+                </div> -->
+
+                <button type="submit" class="signup-btn">Create Account</button>
+
+                <div class="signup-footer">
+                    <p>
+                        Already have an account? <a href="login.html">Login here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Get Started</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Farmer Guidelines</a></li>
+                    <li><a href="#">Crop Planning</a></li>
+                    <li><a href="#">Harvest Management</a></li>
+                    <li><a href="#">Sales Process</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i> Agriculture Complex,
+                        Sector 20
+                    </li>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@agroflow.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 AgroFlow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const signupForm = document.getElementById("signupForm");
+
+    signupForm.addEventListener("submit", async function (e) {
+        e.preventDefault(); // Prevent the default form submission (page reload)
+
+        // --- 1. Get form values ---
+        const name = document.getElementById("fullname").value;
+        const email = document.getElementById("email").value;
+        const nid = document.getElementById("nid").value;
+        const contact = document.getElementById("contact").value;
+        const officeLocation = document.getElementById("officeLocation").value;
+        const region = document.getElementById("region").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        // You can add the other fields here if you add them to your Java Entity
+        // const office_location = document.getElementById("office_location").value;
+        // const region = document.getElementById("region").value;
+
+        // --- 2. Simple validation ---
+        if (!name || !email || !nid || !contact || !password || !confirmPassword || !officeLocation || !region) {
+            alert("Please fill in all required fields");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        // --- 3. Create the data object to send ---
+        // IMPORTANT: The keys (e.g., "name", "email") MUST match the field names in your KrishiOfficer.java class.
+        const officerData = {
+            name: name,
+            email: email,
+            nid: nid,
+            contact: contact, // Make sure your Java field is named 'contactNumber'
+            password: password,
+            office_location: officeLocation,
+            region_assigned: region,
+        };
+
+        // --- 4. Send the data to the backend using fetch ---
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(officerData), // Convert the JS object to a JSON string
+            });
+
+            if (response.ok) { // Check if the request was successful (e.g., status 201 CREATED)
+                alert("Account created successfully! Redirecting to login...");
+                window.location.href = "login.html"; // Redirect on success
+            } else {
+                // If the server returns an error (e.g., 400 or 500), display the error message
+                const errorMessage = await response.text(); // Get the error message from the backend
+                alert(`Registration failed: ${errorMessage}`);
+            }
+        } catch (error) {
+            // This catches network errors, etc.
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>
+</body>
+</html>
