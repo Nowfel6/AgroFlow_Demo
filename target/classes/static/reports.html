@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #1e5631;
+          --secondary-color: #4c9f70;
+          --accent-color: #d4a017;
+          --background-color: #f8f9fa;
+          --card-color: #ffffff;
+          --text-color: #333333;
+          --light-text: #6c757d;
+          --border-color: #dee2e6;
+        }
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        body {
+          font-family: "Nunito", sans-serif;
+          background-color: var(--background-color);
+          color: var(--text-color);
+          line-height: 1.6;
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+        .header {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 15px 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+        .logo i {
+          margin-right: 10px;
+        }
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+        .user-profile img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          object-fit: cover;
+          border: 2px solid white;
+        }
+        .horizontal-nav {
+          background-color: white;
+          padding: 0 30px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .nav-items {
+          display: flex;
+          gap: 5px;
+        }
+        .nav-item {
+          padding: 15px 20px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          border-bottom: 3px solid transparent;
+        }
+        .nav-item:hover,
+        .nav-item.active {
+          color: var(--primary-color);
+          border-bottom: 3px solid var(--primary-color);
+          background-color: rgba(30, 86, 49, 0.05);
+        }
+        .main-content {
+          padding: 30px;
+          max-width: 1200px;
+          margin: auto;
+        }
+        .dashboard-section {
+          background-color: var(--card-color);
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          padding: 30px;
+          margin-bottom: 30px;
+        }
+        .section-header {
+          margin-bottom: 25px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid var(--border-color);
+        }
+        .section-header h2 {
+          color: var(--primary-color);
+          font-size: 1.6rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        /* Form and Table Styling */
+        .data-entry-form {
+          display: flex;
+          gap: 15px;
+          align-items: flex-end;
+          margin-bottom: 25px;
+        }
+        .form-group {
+          flex-grow: 1;
+        }
+        .form-group label {
+          font-weight: 600;
+          margin-bottom: 8px;
+          display: block;
+        }
+        .form-group input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          font-size: 1rem;
+        }
+        .btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 12px 25px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 700;
+          transition: background-color 0.3s;
+          white-space: nowrap;
+        }
+        .btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        .results-table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        .results-table th,
+        .results-table td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid var(--border-color);
+        }
+        .results-table th {
+          background-color: rgba(30, 86, 49, 0.05);
+          color: var(--primary-color);
+          font-weight: 700;
+        }
+
+        /* Chart Styling */
+        .chart-search-form {
+          display: flex;
+          gap: 15px;
+          align-items: center;
+        }
+        .chart-search-form input {
+          flex-grow: 1;
+          padding: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          font-size: 1rem;
+        }
+        .chart-container {
+          margin-top: 30px;
+          padding: 20px;
+          background-color: #f8f9fa;
+          border-radius: 8px;
+        }
+        .chart-title {
+          text-align: center;
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-bottom: 25px;
+        }
+        .chart-area {
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          height: 250px;
+          border-bottom: 2px solid var(--border-color);
+        }
+        .bar-group {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 18%;
+        }
+        .bar {
+          width: 50px;
+          background-color: var(--secondary-color);
+          border-radius: 5px 5px 0 0;
+          position: relative;
+          transition: height 0.5s ease-out;
+        }
+        .bar .value {
+          position: absolute;
+          top: -25px;
+          width: 100%;
+          text-align: center;
+          font-size: 0.9rem;
+          font-weight: 600;
+        }
+        .bar-group .label {
+          margin-top: 10px;
+          font-weight: 600;
+        }
+        .placeholder-text {
+          text-align: center;
+          padding: 40px;
+          color: var(--light-text);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <i class="fas fa-leaf"></i> <span>AgroFlow Officer Dashboard</span>
+    </div>
+    <div class="user-info">
+        <div class="notification-icon"><i class="fas fa-bell"></i></div>
+        <div class="user-profile">
+            <img
+                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                    alt="Officer"
+            />
+            <span>Officer Name</span>
+        </div>
+    </div>
+</div>
+
+<!-- Horizontal Navigation -->
+<div class="horizontal-nav">
+    <div class="nav-items">
+        <div class="nav-item">
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="nav-item">
+            <a href="register-farmer.html">Register Farmer</a>
+        </div>
+        <div class="nav-item">
+            <a href="farmer-dashboard.html">Farmer Dashboard</a>
+        </div>
+        <div class="nav-item">
+            <a href="farmer-analytic.html">Farmer Analytics</a>
+        </div>
+        <div class="nav-item">
+            <a href="sales-management.html">Sales Management</a>
+        </div>
+        <div class="nav-item active"><a href="reports.html">Reports</a></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Data Entry Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2>
+                <i class="fas fa-edit"></i> Add Harvest Data (Current Session)
+            </h2>
+        </div>
+        <form class="data-entry-form" id="dataEntryForm">
+            <div class="form-group">
+                <label for="newCropName">Crop Name</label>
+                <input
+                        type="text"
+                        id="newCropName"
+                        placeholder="e.g., Potato"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="newHarvestAmount">Total Harvest (kg)</label>
+                <input
+                        type="number"
+                        id="newHarvestAmount"
+                        placeholder="e.g., 50000"
+                        required
+                />
+            </div>
+            <button type="submit" class="btn">Add Entry</button>
+        </form>
+        <table class="results-table">
+            <thead>
+            <tr>
+                <th>Crop Name</th>
+                <th>Total Harvest (kg)</th>
+            </tr>
+            </thead>
+            <tbody id="currentYearTableBody">
+            <!-- Pre-populated data -->
+            <tr>
+                <td>Rice</td>
+                <td>330,000</td>
+            </tr>
+            <tr>
+                <td>Jute</td>
+                <td>115,000</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Historical Chart Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-line"></i> 5-Year Harvest Comparison</h2>
+        </div>
+        <form class="chart-search-form" id="chartSearchForm">
+            <input
+                    type="text"
+                    id="chartCropSearch"
+                    placeholder="Enter crop to compare (e.g., Rice)"
+                    required
+            />
+            <button type="submit" class="btn">Generate Chart</button>
+        </form>
+
+        <div id="chartContainer" class="chart-container" style="display: none">
+            <h3 class="chart-title">
+                5-Year Total Harvest: <span id="chartCropName"></span>
+            </h3>
+            <div class="chart-area" id="chartArea">
+                <!-- Bars will be generated by JS -->
+            </div>
+        </div>
+        <p id="noChartData" class="placeholder-text" style="display: none">
+            No historical data found for this crop.
+        </p>
+    </div>
+</div>
+
+<script>
+    // --- Section 1: Handle Manual Data Entry ---
+    const dataEntryForm = document.getElementById("dataEntryForm");
+    const tableBody = document.getElementById("currentYearTableBody");
+
+    dataEntryForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const cropName = document.getElementById("newCropName").value;
+      const harvestAmount = parseInt(
+        document.getElementById("newHarvestAmount").value
+      ).toLocaleString();
+
+      // Create a new table row
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `<td>${cropName}</td><td>${harvestAmount}</td>`;
+
+      // Add the new row to the table
+      tableBody.appendChild(newRow);
+
+      // Clear the form fields
+      dataEntryForm.reset();
+    });
+
+    // --- Section 2: Handle Historical Chart Generation ---
+    const chartSearchForm = document.getElementById("chartSearchForm");
+    const chartContainer = document.getElementById("chartContainer");
+    const noChartDataMsg = document.getElementById("noChartData");
+    const chartArea = document.getElementById("chartArea");
+
+    chartSearchForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const query = document
+        .getElementById("chartCropSearch")
+        .value.toLowerCase();
+
+      // Dummy data for simulation
+      const historicalData = {
+        rice: [
+          { year: 2020, harvest: 280000 },
+          { year: 2021, harvest: 310000 },
+          { year: 2022, harvest: 295000 },
+          { year: 2023, harvest: 300000 },
+          { year: 2024, harvest: 330000 },
+        ],
+      };
+
+      if (historicalData[query]) {
+        const data = historicalData[query];
+        const maxHarvest = Math.max(...data.map((item) => item.harvest));
+
+        document.getElementById("chartCropName").textContent =
+          query.charAt(0).toUpperCase() + query.slice(1);
+        chartArea.innerHTML = ""; // Clear previous chart
+
+        data.forEach((item) => {
+          const barHeight = (item.harvest / maxHarvest) * 100;
+          const barGroup = document.createElement("div");
+          barGroup.className = "bar-group";
+          barGroup.innerHTML = `
+            <div class="bar" style="height: ${barHeight}%;">
+              <div class="value">${(item.harvest / 1000).toFixed(0)}k</div>
+            </div>
+            <div class="label">${item.year}</div>
+          `;
+          chartArea.appendChild(barGroup);
+        });
+
+        chartContainer.style.display = "block";
+        noChartDataMsg.style.display = "none";
+      } else {
+        chartContainer.style.display = "none";
+        noChartDataMsg.style.display = "block";
+      }
+    });
+</script>
+</body>
+</html>

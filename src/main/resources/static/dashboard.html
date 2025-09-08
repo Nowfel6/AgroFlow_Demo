@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroFlow Officer Dashboard</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #1e5631;
+          --secondary-color: #4c9f70;
+          --accent-color: #d4a017;
+          --background-color: #f8f9fa;
+          --card-color: #ffffff;
+          --text-color: #333333;
+          --light-text: #6c757d;
+          --border-color: #dee2e6;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Nunito", sans-serif;
+          background-color: var(--background-color);
+          color: var(--text-color);
+          line-height: 1.6;
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+        /* Header */
+        .header {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 15px 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 25px; /* Increased gap slightly for better spacing */
+        }
+
+        .user-profile {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .user-profile img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          object-fit: cover;
+          border: 2px solid white;
+        }
+
+        /* Horizontal Navigation */
+        .horizontal-nav {
+          background-color: white;
+          padding: 0 30px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: center; /* Centered the navigation items */
+          align-items: center;
+        }
+
+        .nav-items {
+          display: flex;
+          gap: 5px;
+        }
+
+        .nav-item {
+          padding: 15px 20px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          border-bottom: 3px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+          color: var(--primary-color);
+          border-bottom: 3px solid var(--primary-color);
+          background-color: rgba(30, 86, 49, 0.05);
+        }
+        .notification-container,
+        .profile-container {
+          position: relative;
+        }
+
+        .notification-icon {
+          cursor: pointer;
+          font-size: 1.2rem; /* Made bell icon slightly larger */
+        }
+
+        .dropdown-menu {
+          display: none; /* Hidden by default */
+          position: absolute;
+          top: 50px; /* Position below the header items */
+          right: 0;
+          background-color: var(--card-color);
+          min-width: 240px; /* Wider for notifications */
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+          border-radius: 8px;
+          z-index: 100;
+          border: 1px solid var(--border-color);
+          overflow: hidden;
+        }
+
+        /* Class to show the dropdown */
+        .dropdown-menu.show {
+          display: block;
+        }
+
+        .dropdown-item {
+          color: var(--text-color);
+          padding: 12px 16px;
+          display: block;
+          transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+          background-color: #f1f1f1;
+        }
+
+        .dropdown-item strong {
+          color: var(--primary-color);
+        }
+
+        .dropdown-item span {
+          font-size: 0.9rem;
+          color: var(--light-text);
+        }
+
+        .dropdown-divider {
+          height: 1px;
+          margin: 0;
+          background-color: var(--border-color);
+        }
+
+        .all-notifications {
+          text-align: center;
+          font-weight: 600;
+          color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+          padding: 30px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 25px;
+        }
+
+        .dashboard-section {
+          background-color: var(--card-color);
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          padding: 25px;
+          transition: transform 0.3s;
+        }
+
+        .dashboard-section:hover {
+          transform: translateY(-5px);
+        }
+
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+          color: var(--primary-color);
+          font-size: 1.4rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .section-header h2 i {
+          color: var(--accent-color);
+        }
+
+        .btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        .placeholder-text {
+          color: var(--light-text);
+          text-align: center;
+          padding: 20px;
+        }
+
+        /* Full width sections */
+        .full-width {
+          grid-column: 1 / -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+          .main-content {
+            grid-template-columns: 1fr;
+          }
+        }
+      /* Fertilizer Recommendations Table */
+      .recommendation-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .recommendation-table th,
+      .recommendation-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .recommendation-table th {
+        background-color: rgba(30, 86, 49, 0.05);
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+
+      .recommendation-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .recommendation-table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .timing-special {
+        color: var(--accent-color);
+        font-weight: 600;
+      }
+        @media (max-width: 768px) {
+          .header {
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+          }
+
+          .horizontal-nav {
+            flex-direction: column;
+            padding: 15px;
+          }
+
+          .nav-items {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 10px;
+          }
+        }
+        /* Section Footer for "View All" buttons */
+        .section-footer {
+          text-align: right;
+          margin-top: 20px;
+          padding-top: 15px;
+          border-top: 1px solid var(--border-color);
+        }
+
+        .btn-link {
+          color: var(--primary-color);
+          font-weight: 600;
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+
+        .btn-link:hover {
+          color: var(--secondary-color);
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <span>AgroFlow Officer Dashboard</span>
+    </div>
+
+    <!-- CORRECTED USER INFO SECTION -->
+    <div class="user-info">
+        <div class="notification-container">
+            <div class="notification-icon" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+            </div>
+            <!-- Notification Dropdown Menu -->
+            <div class="dropdown-menu" id="notificationDropdown">
+                <a href="#" class="dropdown-item">
+                    <strong>New Sale Request</strong><br />
+                    <span>Rahim Uddin submitted a request.</span>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <strong>Harvest Alert</strong><br />
+                    <span>Fatima Begum's tomatoes are ready.</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item all-notifications"
+                >View All Notifications</a
+                >
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <div class="user-profile" id="userProfileBtn">
+                <img
+                        id="userAvatar"
+                        src="https://randomuser.me/api/portraits/men/32.jpg"
+                        alt="Officer"
+                />
+                <span id="userName">Officer Name</span>
+            </div>
+            <!-- Profile Dropdown Menu -->
+            <div class="dropdown-menu" id="profileDropdown">
+                <a href="#" class="dropdown-item">My Profile</a>
+                <a href="#" class="dropdown-item">Settings</a>
+                <div class="dropdown-divider"></div>
+                <a href="index.html" class="dropdown-item" id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Horizontal Navigation -->
+<div class="horizontal-nav">
+    <div class="nav-items">
+        <div class="nav-item active">
+            <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="nav-item">
+            <a href="register-farmer.html">Register Farmer</a>
+        </div>
+        <div class="nav-item">
+            <a href="farmer-dashboard.html">Registered Farmers</a>
+        </div>
+        <div class="nav-item">
+            <a href="farmer-analytic.html">Farmer Analytics</a>
+        </div>
+        <div class="nav-item">
+            <a href="sales-management.html">Sales Management</a>
+        </div>
+        <div class="nav-item"><a href="reports.html">Reports</a></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Market Prices Section -->
+    <!-- Market Prices Section -->
+    <div class="dashboard-section full-width">
+        <div class="section-header">
+            <h2><i class="fas fa-tags"></i> Current Market Prices</h2>
+            <!-- The Refresh Data button can stay or be removed -->
+        </div>
+        <div id="marketPricesContainer">
+            <!-- JS will populate this -->
+            <p class="placeholder-text">Loading market prices...</p>
+        </div>
+        <!-- ADD THIS FOOTER DIV -->
+        <div class="section-footer">
+            <a href="all-market-prices.html" class="btn-link">View All Market Prices &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Crop Calendar Section -->
+    <!-- Crop Calendar Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-calendar-alt"></i> Crop Calendar</h2>
+        </div>
+        <div id="cropCalendarContainer">
+            <!-- JS will populate this -->
+            <p class="placeholder-text">Loading crop calendar...</p>
+        </div>
+        <!-- ADD THIS FOOTER DIV -->
+        <div class="section-footer">
+            <a href="all-crop-calendars.html" class="btn-link">View Full Calendar &rarr;</a>
+        </div>
+    </div>
+
+
+    <!-- Fertilizer Recommendations Section -->
+    <div class="dashboard-section full-width">
+        <div class="section-header">
+            <h2><i class="fas fa-vial"></i> Fertilizer Recommendations</h2>
+        </div>
+        <div id="recommendationsContainer">
+            <!-- The table will be generated here -->
+        </div>
+        <!-- ADD THIS FOOTER DIV -->
+        <div class="section-footer">
+            <a href="all-recommendations.html" class="btn-link">View All Recommendations &rarr;</a>
+        </div>
+    </div>
+<script>
+    // This function will run once the entire HTML page is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- 1. HANDLE LOGIN & PROFILE NAME ---
+        const officerString = sessionStorage.getItem('loggedInOfficer');
+        if (officerString) {
+            const officer = JSON.parse(officerString);
+            const userNameElement = document.getElementById('userName');
+            if (userNameElement) {
+                userNameElement.textContent = officer.name;
+            }
+        } else {
+            alert("You are not logged in. Please log in to continue.");
+            window.location.href = "login.html";
+            return; // Stop the rest of the script from running if not logged in
+        }
+
+        // --- 2. FETCH ALL DASHBOARD DATA FROM THE BACKEND ---
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch('/api/dashboard');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                // Call functions to populate each section with the fetched data
+                populateMarketPrices(data.marketPrices);
+                populateCropCalendar(data.cropCalendars);
+                populateFertilizerRecommendations(data.fertilizerRecommendations);
+
+            } catch (error) {
+                console.error("Failed to fetch dashboard data:", error);
+                document.getElementById('marketPricesContainer').innerHTML = '<p class="placeholder-text">Error loading market prices.</p>';
+                document.getElementById('cropCalendarContainer').innerHTML = '<p class="placeholder-text">Error loading crop calendar.</p>';
+                document.getElementById('recommendationsContainer').innerHTML = '<p class="placeholder-text">Error loading recommendations.</p>';
+            }
+        }
+
+        // --- 3. POPULATE EACH SECTION DYNAMICALLY ---
+
+        // Function to populate the Market Prices table (CORRECTED)
+        function populateMarketPrices(prices) {
+            const container = document.getElementById('marketPricesContainer');
+            if (!prices || prices.length === 0) {
+                container.innerHTML = '<p class="placeholder-text">No market price data available.</p>';
+                return;
+            }
+const pricesToShow = prices.slice(0, 10);
+
+            const tableHTML = `
+                <table class="recommendation-table">
+                    <thead>
+                        <tr>
+                            <th>Crop</th>
+                            <th>Market Price (per kg)</th>
+                            <th>Effective Month</th>
+                            <th>Source</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${pricesToShow.map(price => `
+                            <tr>
+                                <td>${price.cropName}</td>
+                                <td>${Number(price.market_price_per_kg).toFixed(2)}</td>
+                                <td>${price.effective_month}</td>
+                                <td>${price.price_source}</td>
+                                <td>${price.price_type}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = tableHTML;
+        }
+
+                // Function to populate the Crop Calendar table (NEW TABLE VERSION)
+        function populateCropCalendar(calendars) {
+            const container = document.getElementById('cropCalendarContainer');
+            if (!calendars || calendars.length === 0) {
+                container.innerHTML = '<p class="placeholder-text">No crop calendar data available.</p>';
+                return;
+            }
+ const calendarsToShow = calendars.slice(0, 5);
+
+            const tableHTML = `
+                <table class="recommendation-table">
+                    <thead>
+                        <tr>
+                            <th>Crop Name</th>
+                            <th>Sowing Season</th>
+                            <th>Harvest Season</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${calendarsToShow.map(cal => `
+                            <tr>
+                                <td>${cal.name}</td>
+                                <td>${cal.sowingSeason}</td>
+                                <td>${cal.harvestSeason}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = tableHTML;
+        }
+
+        // Function to populate the Fertilizer Recommendations table
+        function populateFertilizerRecommendations(recommendations) {
+            const container = document.getElementById('recommendationsContainer');
+            const tableBody = container.querySelector('tbody');
+             if (!recommendations || recommendations.length === 0) {
+                container.innerHTML = '<p class="placeholder-text">No fertilizer recommendations available.</p>';
+                return;
+            }
+const recommendationsToShow = recommendations.slice(0, 5);
+           const tableHTML = `
+                <table class="recommendation-table">
+                    <thead>
+                        <tr>
+                            <th>Crop</th>
+                            <th>Fertilizer Name</th>
+                            <th>Application Timing</th>
+                            <th>Dosage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${recommendationsToShow.map(rec => `
+                            <tr>
+                                <td>${rec.cropName}</td>
+                                <td>${rec.fertilizerName}</td>
+                                <td>${rec.applicationTiming}</td>
+                                <td>${rec.dosage} ${rec.dosageUnit ? `(${rec.dosageUnit})` : ''}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = tableHTML;
+        }
+
+        // --- 4. INITIALIZE THE DASHBOARD ---
+        fetchDashboardData();
+
+
+        // --- 5. YOUR EXISTING SCRIPTS FOR UI INTERACTIVITY ---
+
+        // Navigation active state
+        document.querySelectorAll(".nav-item").forEach((item) => {
+            item.addEventListener("click", function () {
+                document.querySelectorAll(".nav-item").forEach((nav) => nav.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+
+        // Dropdowns
+        const notificationBtn = document.getElementById("notificationBtn");
+        const notificationDropdown = document.getElementById("notificationDropdown");
+        const userProfileBtn = document.getElementById("userProfileBtn");
+        const profileDropdown = document.getElementById("profileDropdown");
+
+        function toggleDropdown(dropdown) {
+            dropdown.classList.toggle('show');
+        }
+
+        notificationBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (profileDropdown.classList.contains("show")) profileDropdown.classList.remove("show");
+            toggleDropdown(notificationDropdown);
+        });
+
+        userProfileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (notificationDropdown.classList.contains("show")) notificationDropdown.classList.remove("show");
+            toggleDropdown(profileDropdown);
+        });
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn'); // Make sure your logout button has id="logoutBtn"
+        if(logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.removeItem('loggedInOfficer');
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            });
+        }
+
+        window.addEventListener("click", function (event) {
+            if (!event.target.closest(".notification-container") && !event.target.closest(".profile-container")) {
+                notificationDropdown.classList.remove("show");
+                profileDropdown.classList.remove("show");
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Analytics - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #1e5631;
+          --secondary-color: #4c9f70;
+          --accent-color: #d4a017;
+          --background-color: #f8f9fa;
+          --card-color: #ffffff;
+          --text-color: #333333;
+          --light-text: #6c757d;
+          --border-color: #dee2e6;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Nunito", sans-serif;
+          background-color: var(--background-color);
+          color: var(--text-color);
+          line-height: 1.6;
+        }
+
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        /* Header */
+        .header {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 15px 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .user-profile img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          object-fit: cover;
+          border: 2px solid white;
+        }
+
+        /* Horizontal Navigation */
+        .horizontal-nav {
+          background-color: white;
+          padding: 0 30px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .nav-items {
+          display: flex;
+          gap: 5px;
+        }
+
+        .nav-item {
+          padding: 15px 20px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          border-bottom: 3px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+          color: var(--primary-color);
+          border-bottom: 3px solid var(--primary-color);
+          background-color: rgba(30, 86, 49, 0.05);
+        }
+
+        /* Main Content */
+        .main-content {
+          padding: 30px;
+          max-width: 1200px;
+          margin: auto;
+        }
+
+        /* Stats Overview */
+        .stats-container {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 25px;
+          margin-bottom: 30px;
+        }
+
+        .stat-card {
+          background-color: var(--card-color);
+          padding: 25px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+
+        .stat-card .icon {
+          font-size: 2.5rem;
+          color: var(--primary-color);
+          background-color: rgba(30, 86, 49, 0.1);
+          height: 60px;
+          width: 60px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .stat-card .info .value {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--text-color);
+        }
+
+        .stat-card .info .label {
+          font-size: 1rem;
+          color: var(--light-text);
+        }
+
+        .dashboard-section {
+          background-color: var(--card-color);
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          padding: 30px;
+          margin-bottom: 30px;
+        }
+
+        .section-header {
+          margin-bottom: 25px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+          color: var(--primary-color);
+          font-size: 1.6rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+
+        .search-bar input {
+          flex-grow: 1;
+          padding: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          font-family: "Nunito", sans-serif;
+          font-size: 1rem;
+        }
+
+        .btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 12px 25px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 700;
+          transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        /* Tables */
+        .results-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+
+        .results-table th,
+        .results-table td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-table th {
+          background-color: rgba(30, 86, 49, 0.05);
+          color: var(--primary-color);
+          font-weight: 700;
+        }
+
+        .results-table tr:hover {
+          background-color: #f1f1f1;
+        }
+
+        .placeholder-text {
+          text-align: center;
+          margin-top: 20px;
+          color: var(--light-text);
+          padding: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          .header,
+          .horizontal-nav {
+            flex-direction: column;
+            padding: 15px;
+          }
+          .nav-items {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 10px;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <span>AgroFlow Officer Dashboard</span>
+    </div>
+    <div class="user-info">
+        <div class="notification-icon"><i class="fas fa-bell"></i></div>
+        <div class="user-profile">
+            <img
+                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                    alt="Officer"
+            />
+            <span>Officer Name</span>
+        </div>
+    </div>
+</div>
+
+<!-- Horizontal Navigation -->
+<div class="horizontal-nav">
+    <div class="nav-items">
+        <div class="nav-item"><a href="dashboard.html">Dashboard</a></div>
+        <div class="nav-item">
+            <a href="register-farmer.html">Register Farmer</a>
+        </div>
+        <div class="nav-item">
+            <a href="farmer-dashboard.html">Farmer Dashboard</a>
+        </div>
+        <div class="nav-item active">
+            <a> Farmer Analytics</a>
+        </div>
+        <div class="nav-item">
+            <a href="sales-management.html">Sales Management</a>
+        </div>
+        <div class="nav-item"><a href="reports.html">Reports</a></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Stats Overview Section -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <div class="info">
+                <div class="value">0</div>
+                <div class="label">Total Farmers</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-clipboard-list"></i></div>
+            <div class="info">
+                <div class="value">0</div>
+                <div class="label">Total Crop Plans</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-tractor"></i></div>
+            <div class="info">
+                <div class="value">0</div>
+                <div class="label">Total Harvested Crops</div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-bar"></i> Overall Harvest Summary</h2>
+        </div>
+        <table class="results-table">
+            <thead>
+            <tr>
+                <th>Crop Name</th>
+                <th>Total Area (acres)</th>
+                <th>Total Harvest (kg)</th>
+                <th>Season</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Static data for demonstration -->
+            <tr>
+                <td>Rice (Boro)</td>
+                <td>150</td>
+                <td>300,000</td>
+                <td>Rabi 2023-24</td>
+            </tr>
+            <tr>
+                <td>Jute</td>
+                <td>75</td>
+                <td>112,500</td>
+                <td>Kharif-1 2024</td>
+            </tr>
+            <tr>
+                <td>Potato</td>
+                <td>120</td>
+                <td>2,400,000</td>
+                <td>Rabi 2023-24</td>
+            </tr>
+            <tr>
+                <td>Mustard</td>
+                <td>90</td>
+                <td>108,000</td>
+                <td>Rabi 2023-24</td>
+            </tr>
+            <tr>
+                <td>Rice (Aman)</td>
+                <td>200</td>
+                <td>350,000</td>
+                <td>Kharif-2 2023</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Search by Crop Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-search-location"></i> Find Farmers by Crop</h2>
+        </div>
+        <form class="search-bar" id="cropSearchForm">
+            <input
+                    type="text"
+                    id="cropName"
+                    placeholder="Enter crop name (e.g., Potato)"
+                    required
+            />
+            <button type="submit" class="btn">Search</button>
+        </form>
+
+        <!-- Search Results Table -->
+        <div id="searchResultsContainer" style="display: none">
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>Crop Name</th>
+                    <th>Farmer Name</th>
+                    <th>Field Name</th>
+                    <th>Planting Date</th>
+                    <th>Ending Date</th>
+                </tr>
+                </thead>
+                <tbody id="searchResultsBody">
+                <!-- JS will populate this -->
+                </tbody>
+            </table>
+        </div>
+        <p id="noResults" class="placeholder-text" style="display: none">
+            No farmers found cultivating this crop.
+        </p>
+    </div>
+
+    <!-- Ongoing Crop Plans Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-tasks"></i> Ongoing Farmer Crop Plans</h2>
+        </div>
+        <table class="results-table">
+            <thead>
+            <tr>
+                <th>Farmer Name</th>
+                <th>Crop</th>
+                <th>Field Name</th>
+                <th>Planting Date</th>
+                <th>Expected Harvest</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Static data for demonstration -->
+            <tr>
+                <td>Rahim Uddin</td>
+                <td>Potato</td>
+                <td>North Field</td>
+                <td>2024-11-15</td>
+                <td>2025-02-20</td>
+            </tr>
+            <tr>
+                <td>Fatima Begum</td>
+                <td>Tomato</td>
+                <td>South Field 2</td>
+                <td>2024-12-01</td>
+                <td>2025-03-10</td>
+            </tr>
+            <tr>
+                <td>Abdullah Al Mamun</td>
+                <td>Rice (Boro)</td>
+                <td>East Paddy</td>
+                <td>2025-01-10</td>
+                <td>2025-05-15</td>
+            </tr>
+            <tr>
+                <td>Karim Sheikh</td>
+                <td>Jute</td>
+                <td>West Field</td>
+                <td>2025-04-20</td>
+                <td>2025-08-30</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Simulate Crop Search
+    const cropSearchForm = document.getElementById("cropSearchForm");
+    const resultsContainer = document.getElementById(
+      "searchResultsContainer"
+    );
+    const resultsBody = document.getElementById("searchResultsBody");
+    const noResultsMsg = document.getElementById("noResults");
+
+    // Dummy data for simulation
+    const dummyCropData = [
+      {
+        crop: "Potato",
+        farmer: "Rahim Uddin",
+        field: "North Field",
+        plantDate: "2024-11-15",
+        endDate: "2025-02-20",
+      },
+      {
+        crop: "Potato",
+        farmer: "Sufia Khatun",
+        field: "Field A",
+        plantDate: "2024-11-20",
+        endDate: "2025-02-25",
+      },
+    ];
+
+    cropSearchForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const query = document.getElementById("cropName").value.toLowerCase();
+
+      const results = dummyCropData.filter(
+        (item) => item.crop.toLowerCase() === query
+      );
+
+      // Clear previous results
+      resultsBody.innerHTML = "";
+
+      if (results.length > 0) {
+        results.forEach((item) => {
+          const row = `<tr>
+            <td>${item.crop}</td>
+            <td>${item.farmer}</td>
+            <td>${item.field}</td>
+            <td>${item.plantDate}</td>
+            <td>${item.endDate}</td>
+          </tr>`;
+          resultsBody.innerHTML += row;
+        });
+        resultsContainer.style.display = "block";
+        noResultsMsg.style.display = "none";
+      } else {
+        resultsContainer.style.display = "none";
+        noResultsMsg.style.display = "block";
+      }
+    });
+</script>
+</body>
+</html>

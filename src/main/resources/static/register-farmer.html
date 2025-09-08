@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Farmer - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #1e5631;
+          --secondary-color: #4c9f70;
+          --accent-color: #d4a017;
+          --background-color: #f8f9fa;
+          --card-color: #ffffff;
+          --text-color: #333333;
+          --light-text: #6c757d;
+          --border-color: #dee2e6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Nunito", sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .header { background-color: var(--primary-color); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 700; }
+        .logo i { margin-right: 10px; }
+        .user-info { display: flex; align-items: center; gap: 25px; }
+        .user-profile { display: flex; align-items: center; cursor: pointer; }
+        .user-profile img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; border: 2px solid white; }
+        .notification-container, .profile-container { position: relative; }
+        .notification-icon { cursor: pointer; font-size: 1.2rem; }
+        .dropdown-menu { display: none; position: absolute; top: 50px; right: 0; background-color: var(--card-color); min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 8px; z-index: 100; border: 1px solid var(--border-color); overflow: hidden; }
+        .dropdown-menu.show { display: block; }
+        .dropdown-item { color: var(--text-color); padding: 12px 16px; display: block; transition: background-color 0.2s; }
+        .dropdown-item:hover { background-color: #f1f1f1; }
+        .dropdown-divider { height: 1px; margin: 0; background-color: var(--border-color); }
+        .horizontal-nav { background-color: white; padding: 0 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); display: flex; justify-content: center; align-items: center; }
+        .nav-items { display: flex; gap: 5px; }
+        .nav-item { padding: 15px 20px; font-weight: 600; cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent; }
+        .nav-item:hover, .nav-item.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); background-color: rgba(30, 86, 49, 0.05); }
+        .main-content { padding: 30px; }
+        .form-section { background-color: var(--card-color); border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); padding: 30px; max-width: 900px; margin: auto; }
+        .section-header { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
+        .section-header h2 { color: var(--primary-color); font-size: 1.6rem; display: flex; align-items: center; gap: 10px; }
+        .section-header h2 i { color: var(--accent-color); }
+        .registration-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-weight: 600; margin-bottom: 8px; color: var(--text-color); }
+        .form-group input { padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-family: "Nunito", sans-serif; font-size: 1rem; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(30, 86, 49, 0.1); }
+        .form-actions { grid-column: 1 / -1; text-align: right; margin-top: 20px; }
+        .btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: 700; transition: background-color 0.3s; }
+        .btn:hover { background-color: var(--secondary-color); }
+        @media (max-width: 768px) {
+          .registration-form { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <span>AgroFlow Officer Dashboard</span>
+    </div>
+    <div class="user-info">
+        <div class="notification-container">
+            <div class="notification-icon" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+            </div>
+            <!-- Notification dropdown would go here if needed -->
+        </div>
+        <div class="profile-container">
+            <div class="user-profile" id="userProfileBtn">
+                <img id="userAvatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Officer" />
+                <span id="userName">Loading...</span>
+            </div>
+            <div class="dropdown-menu" id="profileDropdown">
+                <a href="#" class="dropdown-item">My Profile</a>
+                <a href="#" class="dropdown-item">Settings</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item" id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Horizontal Navigation -->
+<div class="horizontal-nav">
+    <div class="nav-items">
+        <div class="nav-item"><a href="dashboard.html">Dashboard</a></div>
+        <div class="nav-item active"><a href="register-farmer.html">Register Farmer</a></div>
+        <div class="nav-item"><a href="farmer-dashboard.html">Registered Farmers</a></div>
+        <div class="nav-item"><a href="farmer-analytics.html">Farmer Analytics</a></div>
+        <div class="nav-item"><a href="sales-management.html">Sales Management</a></div>
+        <div class="nav-item"><a href="reports.html">Reports</a></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="form-section">
+        <div class="section-header">
+            <h2><i class="fas fa-user-plus"></i> Register New Farmer</h2>
+        </div>
+
+        <form class="registration-form" id="registrationForm">
+            <!-- Name -->
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter farmer's full name" required />
+            </div>
+            <!-- Contact Number -->
+            <div class="form-group">
+                <label for="contactNo">Contact No.</label>
+                <input type="tel" id="contactNo" placeholder="Enter 11-digit phone number" required />
+            </div>
+            <!-- NID -->
+            <div class="form-group">
+                <label for="nid">National ID (NID)</label>
+                <input type="text" id="nid" placeholder="Enter NID number" required />
+            </div>
+            <!-- District -->
+            <div class="form-group">
+                <label for="district">District</label>
+                <input type="text" id="district" placeholder="e.g., Comilla" required />
+            </div>
+            <!-- Union -->
+            <div class="form-group">
+                <label for="union">Union</label>
+                <input type="text" id="union" placeholder="e.g., Kalirbazar" required />
+            </div>
+            <!-- Village -->
+            <div class="form-group">
+                <label for="village">Village</label>
+                <input type="text" id="village" placeholder="e.g., Jorkanon" required />
+            </div>
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn">Register Farmer</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ======================================================= -->
+<!-- ===      UPDATED AND COMPLETE JAVASCRIPT BLOCK      === -->
+<!-- ======================================================= -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- PART 1: LOGIN CHECK & UI SETUP ---
+        const officerString = sessionStorage.getItem('loggedInOfficer');
+        let loggedInOfficer = null; // Variable to hold the officer object
+
+        if (officerString) {
+            loggedInOfficer = JSON.parse(officerString);
+            const userNameElement = document.getElementById('userName');
+            if (userNameElement) {
+                userNameElement.textContent = loggedInOfficer.name;
+            }
+        } else {
+            alert("You are not logged in. Please log in to continue.");
+            window.location.href = "login.html";
+            return; // Stop script execution if not logged in
+        }
+
+        // --- PART 2: FORM SUBMISSION HANDLER ---
+        const registrationForm = document.getElementById("registrationForm");
+        registrationForm.addEventListener("submit", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const farmerData = {
+                name: document.getElementById('fullName').value,
+                contact: document.getElementById('contactNo').value,
+                nid: document.getElementById('nid').value,
+                district: document.getElementById('district').value,
+                union_name: document.getElementById('union').value, // Matches the corrected Java entity
+                village: document.getElementById('village').value,
+                officer: {
+                    id: loggedInOfficer.id // IMPORTANT: Link this farmer to the logged-in officer
+                }
+            };
+
+            // Send data to the backend
+            try {
+                const response = await fetch('/api/farmers/register', { // The new backend endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(farmerData),
+                });
+
+                if (response.ok) {
+                    alert("Farmer registered successfully!");
+                    registrationForm.reset(); // Clear the form for the next entry
+                } else {
+                    const errorMessage = await response.text();
+                    alert(`Registration failed: ${errorMessage}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while registering the farmer.');
+            }
+        });
+
+        // --- PART 3: UI INTERACTIVITY (DROPDOWNS, LOGOUT, ETC.) ---
+
+        // Dropdowns
+        const notificationBtn = document.getElementById("notificationBtn");
+        const profileDropdown = document.getElementById("profileDropdown");
+        const userProfileBtn = document.getElementById("userProfileBtn");
+
+        if(userProfileBtn) {
+            userProfileBtn.addEventListener("click", function (event) {
+                event.stopPropagation();
+                profileDropdown.classList.toggle('show');
+            });
+        }
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        if(logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.removeItem('loggedInOfficer');
+                alert('You have been logged out.');
+                window.location.href = 'login.html';
+            });
+        }
+
+        // Close dropdowns if clicking outside
+        window.addEventListener("click", function (event) {
+            if (profileDropdown && !event.target.closest(".profile-container")) {
+                profileDropdown.classList.remove("show");
+            }
+            // Add similar logic for notification dropdown if it exists
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #0b6736;
+          --secondary-color: #2e8b57;
+          --light-color: #f5f9f7;
+          --dark-color: #333;
+          --text-color: #444;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Poppins", sans-serif;
+          color: var(--text-color);
+          background-color: #f8f8f8;
+          line-height: 1.6;
+          min-height: 100vh;
+          background: linear-gradient(
+              rgba(255, 255, 255, 0.9),
+              rgba(255, 255, 255, 0.9)
+            ),
+            url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+          background-color: white;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          z-index: 1000;
+        }
+
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 0;
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-weight: 700;
+          color: var(--primary-color);
+          text-decoration: none;
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .auth-buttons {
+          display: flex;
+          gap: 15px;
+        }
+
+        .btn {
+          padding: 8px 20px;
+          border-radius: 30px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s;
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        .btn-outline {
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          background: transparent;
+        }
+
+        .btn-outline:hover {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        .btn-filled {
+          background-color: var(--primary-color);
+          color: white;
+          border: 2px solid var(--primary-color);
+        }
+
+        .btn-filled:hover {
+          background-color: var(--secondary-color);
+          border-color: var(--secondary-color);
+        }
+
+        /* Main Content */
+        main {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 40px 0;
+        }
+
+        /* Login Form */
+        .login-container {
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 450px;
+          padding: 40px;
+          text-align: center;
+          margin: 0 auto;
+        }
+
+        .login-header {
+          margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+          color: var(--primary-color);
+          font-size: 2.2rem;
+          margin-bottom: 10px;
+        }
+
+        .login-header p {
+          color: var(--text-color);
+        }
+
+        .form-group {
+          text-align: left;
+          margin-bottom: 20px;
+        }
+
+        .form-group label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: var(--dark-color);
+        }
+
+        .form-group input {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 16px;
+          transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+          border-color: var(--primary-color);
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(11, 103, 54, 0.2);
+        }
+
+        .login-btn {
+          width: 100%;
+          padding: 14px;
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          margin-top: 10px;
+        }
+
+        .login-btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        .login-footer {
+          margin-top: 20px;
+        }
+
+        .login-footer a {
+          color: var(--primary-color);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .login-footer a:hover {
+          text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 30px 0 20px;
+          margin-top: auto;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 30px;
+          margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+          font-size: 1.2rem;
+          margin-bottom: 15px;
+          color: white;
+        }
+
+        .footer-column ul {
+          list-style: none;
+        }
+
+        .footer-column ul li {
+          margin-bottom: 8px;
+        }
+
+        .footer-column a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: color 0.3s;
+          font-size: 0.9rem;
+        }
+
+        .footer-column a:hover {
+          color: white;
+        }
+
+        .footer-bottom {
+          text-align: center;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .login-container {
+            padding: 30px 20px;
+            margin: 20px;
+          }
+
+          .auth-buttons {
+            display: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .login-header h1 {
+            font-size: 1.8rem;
+          }
+
+          .form-group input {
+            padding: 10px 12px;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>AgroFlow</span>
+            </a>
+
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-filled">Sign Up</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Officer Login</h1>
+                <p>Sign in to your AgroFlow account</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+
+                <div class="form-group">
+                    <a href="#" style="float: right; font-size: 0.9rem"
+                    >Forgot Password?</a
+                    >
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+
+                <div class="login-footer">
+                    <p>
+                        Don't have an account? <a href="signup.html">Sign up here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Get Started</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Farmer Guidelines</a></li>
+                    <li><a href="#">Crop Planning</a></li>
+                    <li><a href="#">Harvest Management</a></li>
+                    <li><a href="#">Sales Process</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i> Agriculture Complex,
+                        Sector 20
+                    </li>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@agroflow.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 AgroFlow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+        }
+
+        const loginData = {
+            email: email,
+            password: password,
+        };
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+            });
+
+            if (response.ok) {
+                // --- THIS IS THE NEW PART ---
+                // 1. Get the officer data from the response body
+                const officer = await response.json();
+
+                // 2. Save the officer's data in sessionStorage
+                // sessionStorage is a temporary storage that lasts for the duration of the page session.
+                // It's perfect for storing login info. We store it as a JSON string.
+                sessionStorage.setItem('loggedInOfficer', JSON.stringify(officer));
+
+                // 3. Now, redirect to the dashboard
+                alert("Login successful! Redirecting to dashboard...");
+                window.location.href = "dashboard.html";
+
+            }
+            else {
+                const errorMessage = await response.text();
+                alert(`Login failed: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while trying to log in. Please try again.');
+        }
+    });
+</script>
+</body>
+</html>

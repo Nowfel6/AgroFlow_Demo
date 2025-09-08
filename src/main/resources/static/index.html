@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroFlow - Farmer to Krishi Officer Portal</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #0b6736;
+          --secondary-color: #2e8b57;
+          --light-color: #f5f9f7;
+          --dark-color: #333;
+          --text-color: #444;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Poppins", sans-serif;
+          color: var(--text-color);
+          background-color: #f8f8f8;
+          line-height: 1.6;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+          background-color: white;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          position: fixed;
+          width: 100%;
+          top: 0;
+          z-index: 1000;
+        }
+
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 0;
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-weight: 700;
+          color: var(--primary-color);
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: 25px;
+        }
+
+        .nav-links a {
+          text-decoration: none;
+          color: var(--primary-color);
+          font-weight: 500;
+          transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+          color: var(--secondary-color);
+        }
+
+        .auth-buttons {
+          display: flex;
+          gap: 15px;
+        }
+
+        .btn {
+          padding: 8px 20px;
+          border-radius: 30px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+
+        .btn-outline {
+          border: 2px solid var(--primary-color);
+          color: var(--primary-color);
+          background: transparent;
+        }
+
+        .btn-outline:hover {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        .btn-filled {
+          background-color: var(--primary-color);
+          color: white;
+          border: 2px solid var(--primary-color);
+        }
+
+        .btn-filled:hover {
+          background-color: var(--secondary-color);
+          border-color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+          background: linear-gradient(
+              rgba(255, 255, 255, 0.9),
+              rgba(255, 255, 255, 0.9)
+            ),
+            url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+          background-size: cover;
+          background-position: center;
+          padding: 150px 0 100px;
+          text-align: center;
+        }
+
+        .hero h1 {
+          font-size: 3.5rem;
+          color: var(--primary-color);
+          margin-bottom: 20px;
+        }
+
+        .hero p {
+          font-size: 1.2rem;
+          max-width: 700px;
+          margin: 0 auto 40px;
+          color: var(--text-color);
+        }
+
+        /* Features Section */
+        .features {
+          padding: 80px 0;
+          background-color: white;
+        }
+
+        .section-title {
+          text-align: center;
+          margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+          font-size: 2.5rem;
+          color: var(--primary-color);
+          margin-bottom: 15px;
+        }
+
+        .section-title p {
+          max-width: 700px;
+          margin: 0 auto;
+          color: var(--text-color);
+        }
+
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 30px;
+        }
+
+        .feature-card {
+          background-color: var(--light-color);
+          border-radius: 10px;
+          padding: 30px;
+          text-align: center;
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+          font-size: 3rem;
+          color: var(--primary-color);
+          margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+          color: var(--primary-color);
+        }
+
+        /* Gallery Section */
+        .gallery {
+          padding: 80px 0;
+          background-color: #f8f8f8;
+        }
+
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 20px;
+        }
+
+        .gallery-item {
+          height: 250px;
+          border-radius: 10px;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .gallery-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+          transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 60px 0 30px;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 40px;
+          margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+          font-size: 1.5rem;
+          margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+          list-style: none;
+        }
+
+        .footer-column ul li {
+          margin-bottom: 10px;
+        }
+
+        .footer-column a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+          color: white;
+        }
+
+        .footer-bottom {
+          text-align: center;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .nav-links {
+            display: none;
+          }
+
+          .hero h1 {
+            font-size: 2.5rem;
+          }
+
+          .hero p {
+            font-size: 1rem;
+          }
+
+          .features-grid,
+          .gallery-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>AgroFlow</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Get Started</a>
+                <a href="#">Quick Links</a>
+            </div>
+
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-filled">Sign Up</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>AgroFlow</h1>
+        <p>
+            Connecting farmers with Krishi officers for better crop planning,
+            harvest management, and sales. Empowering agriculture through
+            technology.
+        </p>
+        <button class="btn btn-filled">Get Started</button>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>AgroFlow Features</h2>
+            <p>
+                Our platform offers comprehensive solutions for farmers and Krishi
+                officers to streamline agricultural operations.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h3>Farmer Registration</h3>
+                <p>
+                    Krishi officers can easily register farmers with all necessary
+                    details for better management.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Dashboard System</h3>
+                <p>
+                    Both farmers and officers have personalized dashboards to manage
+                    their activities.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h3>Crop Planning</h3>
+                <p>
+                    Farmers can plan their crops with guidance from Krishi officers
+                    for optimal yield.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>Sale Management</h3>
+                <p>
+                    Easily manage crop sales and requests through our integrated
+                    system.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Analytics & Reports</h3>
+                <p>
+                    Generate comprehensive reports and analytics for better decision
+                    making.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Mobile Access</h3>
+                <p>Access the platform from any device, anywhere, anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Gallery</h2>
+            <p>
+                See how AgroFlow is transforming agricultural management across the
+                region.
+            </p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img
+                        src="https://images.unsplash.com/photo-1625246335525-4a3eec5c7493?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        alt="Farmer using technology"
+                />
+            </div>
+            <div class="gallery-item">
+                <img
+                        src="https://images.unsplash.com/photo-1625246335525-4a3eec5c7493?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        alt="Crop planning"
+                />
+            </div>
+            <div class="gallery-item">
+                <img
+                        src="https://images.unsplash.com/photo-1625246335525-4a3eec5c7493?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        alt="Harvest management"
+                />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Get Started</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Farmer Guidelines</a></li>
+                    <li><a href="#">Crop Planning</a></li>
+                    <li><a href="#">Harvest Management</a></li>
+                    <li><a href="#">Sales Process</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i> Agriculture Complex,
+                        Sector 20
+                    </li>
+                    <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                    <li><i class="fas fa-envelope"></i> info@agroflow.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2023 AgroFlow. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Simple JavaScript for interactive elements
+    document.addEventListener("DOMContentLoaded", function () {
+      // Add animation to feature cards on scroll
+      const featureCards = document.querySelectorAll(".feature-card");
+
+      function checkScroll() {
+        featureCards.forEach((card) => {
+          const cardPosition = card.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.3;
+
+          if (cardPosition < screenPosition) {
+            card.style.opacity = 1;
+            card.style.transform = "translateY(0)";
+          }
+        });
+      }
+
+      // Initially set opacity to 0 for animation
+      featureCards.forEach((card) => {
+        card.style.opacity = 0;
+        card.style.transform = "translateY(20px)";
+        card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+      });
+
+      window.addEventListener("scroll", checkScroll);
+      checkScroll(); // Check on initial load
+
+      // Button click handlers
+      const loginBtn = document.querySelector(".btn-outline");
+      const signupBtn = document.querySelector(".btn-filled");
+      const getStartedBtn = document.querySelector(".hero .btn-filled");
+    });
+</script>
+</body>
+</html>

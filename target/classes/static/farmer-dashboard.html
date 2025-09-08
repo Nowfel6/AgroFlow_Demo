@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registered Farmers - AgroFlow</title>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        :root {
+          --primary-color: #1e5631;
+          --secondary-color: #4c9f70;
+          --accent-color: #d4a017;
+          --background-color: #f8f9fa;
+          --card-color: #ffffff;
+          --text-color: #333333;
+          --light-text: #6c757d;
+          --border-color: #dee2e6;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: "Nunito", sans-serif;
+          background-color: var(--background-color);
+          color: var(--text-color);
+          line-height: 1.6;
+        }
+
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        /* Header */
+        .header {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 15px 30px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: 700;
+        }
+
+        .logo i {
+          margin-right: 10px;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .user-profile {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .user-profile img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          object-fit: cover;
+          border: 2px solid white;
+        }
+
+        /* Horizontal Navigation */
+        .horizontal-nav {
+          background-color: white;
+          padding: 0 30px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .nav-items {
+          display: flex;
+          gap: 5px;
+        }
+
+        .nav-item {
+          padding: 15px 20px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          border-bottom: 3px solid transparent;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+          color: var(--primary-color);
+          border-bottom: 3px solid var(--primary-color);
+          background-color: rgba(30, 86, 49, 0.05);
+        }
+
+        /* Main Content */
+        .main-content {
+          padding: 30px;
+          max-width: 1200px;
+          margin: auto;
+        }
+
+        .dashboard-section {
+          background-color: var(--card-color);
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          padding: 30px;
+          margin-bottom: 30px;
+        }
+
+        .section-header {
+          margin-bottom: 25px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header h2 {
+          color: var(--primary-color);
+          font-size: 1.6rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+
+        .search-bar input {
+          flex-grow: 1;
+          padding: 12px;
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          font-family: "Nunito", sans-serif;
+          font-size: 1rem;
+        }
+
+        .btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 12px 25px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 700;
+          transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+          background-color: var(--secondary-color);
+        }
+
+        /* Search Result */
+        #searchResultContainer {
+          margin-top: 20px;
+          padding: 20px;
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          background-color: #f8f9fa;
+        }
+
+        .farmer-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .farmer-details p {
+          margin: 0;
+          line-height: 1.5;
+        }
+
+        .farmer-details strong {
+          color: var(--primary-color);
+        }
+
+        /* All Farmers Table */
+        .farmer-table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        .farmer-table th,
+        .farmer-table td {
+          padding: 12px 15px;
+          text-align: left;
+          border-bottom: 1px solid var(--border-color);
+        }
+
+        .farmer-table th {
+          background-color: rgba(30, 86, 49, 0.05);
+          color: var(--primary-color);
+          font-weight: 700;
+        }
+
+        .farmer-table tr:hover {
+          background-color: #f1f1f1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .header,
+          .horizontal-nav {
+            flex-direction: column;
+            padding: 15px;
+          }
+          .nav-items {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 10px;
+          }
+          .farmer-info {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+          }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <span>AgroFlow Officer Dashboard</span>
+    </div>
+    <div class="user-info">
+        <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+        </div>
+        <div class="user-profile">
+            <img
+                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                    alt="Officer"
+            />
+            <span>Officer Name</span>
+        </div>
+    </div>
+</div>
+
+<!-- Horizontal Navigation -->
+<div class="horizontal-nav">
+    <div class="nav-items">
+        <div class="nav-item"><a href="dashboard.html">Dashboard</a></div>
+        <div class="nav-item">
+            <a href="register-farmer.html">Register Farmer</a>
+        </div>
+        <div class="nav-item active"><a>Farmer Dashboard</a></div>
+        <div class="nav-item">
+            <a href="farmer-analytic.html">Farmer Analytics</a>
+        </div>
+        <div class="nav-item">
+            <a href="sales-management.html">Sales Management</a>
+        </div>
+        <div class="nav-item"><a href="reports.html">Reports</a></div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Search Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-search"></i> Search for a Farmer</h2>
+        </div>
+        <form class="search-bar" id="searchForm">
+            <input
+                    type="text"
+                    id="farmerName"
+                    name="farmerName"
+                    placeholder="Enter farmer's name to search..."
+                    required
+            />
+            <button type="submit" class="btn">Search</button>
+            <button type="button" class="btn btn-outline" id="clearSearchBtn" style="display: none;">Show All</button>
+        </form>
+
+        <!-- Search Result Appears Here -->
+        <div id="searchResultContainer" style="display: none;">
+            <h3 style="margin-bottom: 15px; color: var(--primary-color);">Search Results</h3>
+            <table class="farmer-table">
+                <thead>
+                <tr>
+                    <th>Farmer Name</th>
+                    <th>Contact No.</th>
+                    <th>Village</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="searchResultsBody">
+                <!-- Search result rows will be injected here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <p
+                id="noResults"
+                style="
+            text-align: center;
+            margin-top: 20px;
+            color: var(--light-text);
+            display: none;
+          "
+        >
+            No farmer found with that name.
+        </p>
+    </div>
+
+    <!-- All Farmers List Section -->
+    <div class="dashboard-section">
+        <div class="section-header">
+            <h2><i class="fas fa-users"></i> All Registered Farmers</h2>
+        </div>
+        <table class="farmer-table">
+            <thead>
+            <tr>
+                <th>Farmer Name</th>
+                <th>Contact No.</th>
+                <th>Village</th>
+            </tr>
+            </thead>
+            <tbody id="allFarmersTableBody">
+            <!-- Static data for demonstration -->
+            <tr>
+                <td>Rahim Uddin</td>
+                <td>01712345678</td>
+                <td>Jorkanon</td>
+            </tr>
+            <tr>
+                <td>Karim Sheikh</td>
+                <td>01812345679</td>
+                <td>Debipur</td>
+            </tr>
+            <tr>
+                <td>Fatima Begum</td>
+                <td>01912345680</td>
+                <td>Jorkanon</td>
+            </tr>
+            <tr>
+                <td>Abdullah Al Mamun</td>
+                <td>01512345681</td>
+                <td>Kalirbazar</td>
+            </tr>
+            <tr>
+                <td>Sufia Khatun</td>
+                <td>01612345682</td>
+                <td>Debipur</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- PART 1: LOGIN CHECK & UI SETUP ---
+        const officerString = sessionStorage.getItem('loggedInOfficer');
+        let loggedInOfficer = null;
+
+        if (officerString) {
+            loggedInOfficer = JSON.parse(officerString);
+            const userNameElement = document.querySelector('.user-profile span');
+            if (userNameElement) {
+                userNameElement.textContent = loggedInOfficer.name;
+            }
+        } else {
+            alert("You are not logged in. Please log in to continue.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        // --- GETTING HTML ELEMENTS (CORRECTED) ---
+        // Use the new, specific ID for the main table's body
+        const allFarmersTableBody = document.getElementById("allFarmersTableBody");
+        const searchForm = document.getElementById("searchForm");
+        const searchResultContainer = document.getElementById("searchResultContainer");
+        const searchResultsBody = document.getElementById("searchResultsBody");
+        const noResultsMessage = document.getElementById("noResults");
+
+        // --- PART 2: FUNCTION TO RENDER THE *MAIN* FARMER LIST ---
+        function renderMainFarmerList(farmers) {
+            allFarmersTableBody.innerHTML = ''; // Clear existing static rows
+            if (!farmers || farmers.length === 0) {
+                allFarmersTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No farmers registered yet.</td></tr>';
+                return;
+            }
+
+            const rowsHTML = farmers.map(farmer => `
+                <tr>
+                    <td>${farmer.name}</td>
+                    <td>${farmer.contact}</td>
+                    <td>${farmer.village}</td>
+                </tr>
+            `).join('');
+            allFarmersTableBody.innerHTML = rowsHTML;
+        }
+
+        // --- PART 3: FETCH ALL FARMERS FOR THE OFFICER ON PAGE LOAD ---
+        async function fetchInitialFarmerList() {
+            try {
+                const response = await fetch(`/api/farmers/officer/${loggedInOfficer.id}`);
+                if (!response.ok) throw new Error('Failed to fetch farmers.');
+                const farmers = await response.json();
+                renderMainFarmerList(farmers);
+            } catch (error) {
+                console.error('Error fetching initial farmer list:', error);
+                allFarmersTableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Error loading farmers.</td></tr>';
+            }
+        }
+
+        // --- PART 4: HANDLE THE SEARCH FORM SUBMISSION ---
+        searchForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const searchName = document.getElementById("farmerName").value;
+            if (!searchName.trim()) {
+                searchResultContainer.style.display = "none";
+                noResultsMessage.style.display = "none";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/farmers/search?officerId=${loggedInOfficer.id}&name=${searchName}`);
+                if (!response.ok) throw new Error('Search request failed.');
+                const farmers = await response.json();
+
+                if (farmers.length > 0) {
+                    const resultRowsHTML = farmers.map(farmer => `
+                        <tr>
+                            <td>${farmer.name}</td>
+                            <td>${farmer.contact}</td>
+                            <td>${farmer.village}</td>
+                            <td>
+                                <a href="#" onclick="viewFarmerProfile(${farmer.id}); return false;" class="btn">View Dashboard</a>
+                            </td>
+                        </tr>
+                    `).join('');
+
+                    searchResultsBody.innerHTML = resultRowsHTML;
+                    searchResultContainer.style.display = "block";
+                    noResultsMessage.style.display = "none";
+                } else {
+                    searchResultContainer.style.display = "none";
+                    noResultsMessage.style.display = "block";
+                }
+            } catch (error) {
+                console.error('Error during search:', error);
+                alert('An error occurred during the search.');
+            }
+        });
+
+        // --- PART 5: INITIALIZE THE PAGE ---
+        fetchInitialFarmerList();
+    });
+
+    // --- HELPER FUNCTION (global) ---
+    function viewFarmerProfile(farmerId) {
+        sessionStorage.setItem('selectedFarmerId', farmerId);
+        window.location.href = 'farmer-profile.html';
+    }
+</script>
+</body>
+</html>
